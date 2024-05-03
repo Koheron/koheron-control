@@ -1,2 +1,3 @@
-# koheron-control
-Python package for Koheron controllers
+## koheron-control
+
+Python scripts for serial communication with Koheron controllers
