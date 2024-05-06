@@ -100,7 +100,7 @@ class Controller(object):
                 print(f"Command {cmd} does not exist")
                 return None
             if 'r' not in x[0]:
-                print("Command {cmd} is not readable")
+                print(f"Command {cmd} is not readable")
                 return None
             fmt = x[1]
         val = self.command(cmd)
