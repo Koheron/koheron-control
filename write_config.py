@@ -14,7 +14,7 @@ for param in config:
     ctl.set(param, config[param])
 
 for param in config:
-    print("{} : {}".format(param.upper(), ctl.get(param)))
+    print(f"{param.upper()} : {ctl.get(param)}")
 
 user_input = input("Save configuration? (yes/no): ")
 if user_input.lower() == "yes":

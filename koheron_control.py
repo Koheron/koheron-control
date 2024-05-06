@@ -90,17 +90,17 @@ class Controller(object):
         self.ser.write(cmd.encode() + b"\r\n")
         line = self.ser.readline().decode()
         if not cmd in line:
-            raise ValueError('Command "{}" not returned in prompt. Received "{}" instead.'.format(cmd, line))
+            raise ValueError(f'Command "{cmd}" not returned in prompt. Received "{line}" instead.')
         return self.ser.readline().decode().rstrip()
 
     def get(self, cmd, fmt=None):
         if fmt is None:
             x = self.cmds.get(cmd, None)
             if x is None:
-                print("Command {} does not exist".format(cmd))
+                print(f"Command {cmd} does not exist")
                 return None
             if 'r' not in x[0]:
-                print("Command {} is not readable".format(cmd))
+                print("Command {cmd} is not readable")
                 return None
             fmt = x[1]
         val = self.command(cmd)
@@ -110,16 +110,16 @@ class Controller(object):
         if fmt is None:
             x = self.cmds.get(cmd, None)
             if x is None:
-                print("Command {} does not exist".format(cmd))
+                print(f"Command {cmd} does not exist")
                 return None
             if 'w' not in x[0]:
-                print("Command {} is not writable".format(cmd))
+                print(f"Command {cmd} is not writable")
                 return None
             fmt = x[1]
             if fmt == "":
                 return self.command(cmd)
         fmt_ = " ".join(["%"+s for s in [*fmt]])
-        val = self.command(("{} {}".format(cmd,fmt_) % args))
+        val = self.command(f"{cmd} {fmt_}" % args)
         return format_values(val, fmt)
 
 if __name__ == '__main__':
@@ -127,12 +127,12 @@ if __name__ == '__main__':
     port="/dev/ttyUSB0"
     ctl = Controller(port=port)
 
-    print("MODEL    : {}".format(ctl.get('model')))
-    print("SERIAL   : {}".format(ctl.get('serial')))
-    print("VERSION  : {}".format(ctl.get('version')))
-    print("TBOARD   : {}".format(ctl.get('tboard')))
-    print("USER DATA: {}".format(ctl.get('userdata')))
-    print("ERR      : {}".format(ctl.get('err')))
+    print(f"MODEL    : {ctl.get('model')}")
+    print(f"SERIAL   : {ctl.get('serial')}")
+    print(f"VERSION  : {ctl.get('version')}")
+    print(f"TBOARD   : {ctl.get('tboard')}")
+    print(f"USER DATA: {ctl.get('userdata')}")
+    print(f"ERR      : {ctl.get('err')}")
 
     ctl.set("ilmax", 50.0)
-    print("ILMAX    : {}".format(ctl.get('ilmax')))
+    print(f"ILMAX    : {ctl.get('ilmax')}")
